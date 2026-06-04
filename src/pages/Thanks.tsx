@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { CheckCircle, ArrowLeft } from 'lucide-react';
+import { CheckCircle, Download} from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import AnimatedText from '@/components/AnimatedText';
 import Navbar from '@/components/Navbar';
@@ -7,6 +7,29 @@ import Footer from '@/components/Footer';
 
 const Thanks = () => {
   const navigate = useNavigate();
+  const selectedBrand = localStorage.getItem("selectedBrand");
+
+const brands = [
+  { name: 'Adani', pdf: '/pdfs/Adani.pdf' },
+  { name: 'Tata', pdf: '/pdfs/Tata.pdf' },
+  { name: 'Luminous', pdf: '/pdfs/Luminous.pdf' },
+  { name: 'Waree', pdf: '/pdfs/Waree.pdf' },
+  { name: 'UTL', pdf: '/pdfs/UTL.pdf' },
+];
+
+const handleDownloadPDF = () => {
+  const brand = brands.find(
+    (b) => b.name === selectedBrand
+  );
+  if (!brand) return;
+  const link = document.createElement('a');
+  link.href = brand.pdf;
+  link.download = `${brand.name}.pdf`;
+
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+};
 
   return (
     <main className="min-h-screen bg-background overflow-x-hidden w-full max-w-full">
@@ -47,11 +70,11 @@ const Thanks = () => {
             transition={{ duration: 0.6, delay: 0.6 }}
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
-            onClick={() => navigate('/')}
+            onClick={handleDownloadPDF}
             className="btn-primary-glow inline-flex items-center gap-2"
           >
-            <ArrowLeft className="w-4 h-4" />
-            Back to Home
+            <Download className="w-4 h-4" />
+            Download {selectedBrand} PDF
           </motion.button>
         </div>
       </div>

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import { motion, useInView, AnimatePresence } from 'framer-motion';
-import { Send, Download, Sun } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Send, Sun } from 'lucide-react';
 import { toast } from 'sonner';
 import { useNavigate } from 'react-router-dom';
 import AnimatedText from '@/components/AnimatedText';
@@ -66,7 +66,7 @@ const PmSuryaGhar = () => {
       });
 
       if (response.ok) {
-        toast.success('Thank you! We will contact you soon.');
+        localStorage.setItem("selectedBrand", formData.brand);
         navigate('/thanks');
       } else {
         toast.error('Something went wrong. Please try again.');
@@ -81,30 +81,7 @@ const PmSuryaGhar = () => {
   const handleBrandChange = (brand: string) => {
     setFormData({ ...formData, brand });
     const selectedBrand = brands.find(b => b.name === brand);
-    if (selectedBrand && selectedBrand.pdf !== '#') {
-      toast.info('Brand PDF available for download');
-    }
   };
-
-  const handleDownloadPDF = () => {
-  const selectedBrand = brands.find(
-    (b) => b.name === formData.brand
-  );
-
-  if (!selectedBrand?.pdf) {
-    toast.error("PDF not available");
-    return;
-  }
-
-  const link = document.createElement("a");
-  link.href = selectedBrand.pdf;
-  link.download = `${selectedBrand.name}.pdf`;
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
-
-  toast.success("PDF downloaded successfully");
-};
 
   return (
     <main className="min-h-screen bg-background overflow-x-hidden w-full max-w-full">
@@ -381,19 +358,6 @@ const PmSuryaGhar = () => {
                       </option>
                     ))}
                   </select>
-
-                  {formData.brand && (
-                    <motion.button
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      type="button"
-                      onClick={handleDownloadPDF}
-                      className="mt-4 flex items-center gap-2 text-primary hover:text-primary/80 transition-colors"
-                    >
-                      <Download className="w-4 h-4" />
-                      Download {formData.brand} PDF
-                    </motion.button>
-                  )}
                 </div>
 
                 <motion.button
