@@ -1,0 +1,193 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 4%;
+    --foreground: 0 0% 98%;
+
+    --card: 0 0% 6%;
+    --card-foreground: 0 0% 98%;
+
+    --popover: 0 0% 6%;
+    --popover-foreground: 0 0% 98%;
+
+    --primary: 35 90% 55%;
+    --primary-foreground: 0 0% 4%;
+
+    --secondary: 0 0% 12%;
+    --secondary-foreground: 0 0% 98%;
+
+    --muted: 0 0% 15%;
+    --muted-foreground: 0 0% 65%;
+
+    --accent: 35 85% 50%;
+    --accent-foreground: 0 0% 4%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 0 0% 18%;
+    --input: 0 0% 18%;
+    --ring: 35 90% 55%;
+
+    --radius: 1rem;
+
+    /* Custom design tokens */
+    --gradient-gold: linear-gradient(135deg, hsl(35, 90%, 55%) 0%, hsl(45, 95%, 65%) 50%, hsl(35, 85%, 50%) 100%);
+    --gradient-dark: linear-gradient(180deg, hsl(0, 0%, 4%) 0%, hsl(0, 0%, 8%) 100%);
+    --gradient-hero: linear-gradient(180deg, transparent 0%, hsl(0, 0%, 4%) 100%);
+
+    --shadow-gold: 0 0 60px hsl(35, 90%, 55%, 0.15);
+    --shadow-card: 0 25px 50px -12px hsl(0, 0%, 0%, 0.5);
+
+    --font-display: 'Inter', sans-serif;
+    --font-body: 'Inter', sans-serif;
+  }
+
+  .dark {
+    --background: 0 0% 4%;
+    --foreground: 0 0% 98%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+    width: 100%;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: var(--font-body);
+    overflow-x: hidden;
+    width: 100%;
+    max-width: 100vw;
+    position: relative;
+  }
+
+  #root {
+    overflow-x: hidden;
+    width: 100%;
+    max-width: 100vw;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-body);
+    font-weight: 600;
+  }
+}
+
+@layer components {
+  .text-gradient {
+    @apply bg-clip-text text-transparent;
+    background-image: var(--gradient-gold);
+  }
+
+  .border-gradient {
+    border-image: var(--gradient-gold) 1;
+  }
+
+  .glow-gold {
+    box-shadow: var(--shadow-gold);
+  }
+
+  /* Pill Button Base - Frosted Glass */
+  .btn-pill {
+    @apply inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full text-sm font-medium tracking-wide transition-all duration-300;
+  }
+
+  /* Glass/Transparent Pill Button */
+  .btn-glass {
+    @apply btn-pill bg-white/10 backdrop-blur-sm text-white border border-white/20;
+  }
+
+  .btn-glass:hover {
+    @apply bg-white/20 border-white/30;
+  }
+
+  /* Primary Button with Glow */
+  .btn-primary-glow {
+    @apply btn-pill bg-primary text-primary-foreground border border-primary/50;
+    box-shadow: 0 0 30px hsl(35, 90%, 55%, 0.4), 0 0 60px hsl(35, 90%, 55%, 0.2);
+  }
+
+  .btn-primary-glow:hover {
+    @apply bg-primary/90;
+    box-shadow: 0 0 40px hsl(35, 90%, 55%, 0.5), 0 0 80px hsl(35, 90%, 55%, 0.3);
+  }
+
+  /* Secondary/Outline Dark Button */
+  .btn-outline {
+    @apply btn-pill bg-secondary/50 backdrop-blur-sm text-foreground border border-border;
+  }
+
+  .btn-outline:hover {
+    @apply bg-secondary border-primary/50;
+  }
+
+  .nav-link {
+    @apply relative text-muted-foreground transition-colors duration-300 hover:text-foreground;
+  }
+
+  .nav-link::after {
+    @apply absolute -bottom-1 left-0 h-0.5 w-0 bg-primary transition-all duration-300 content-[''];
+  }
+
+  .nav-link:hover::after {
+    @apply w-full;
+  }
+
+  .section-padding {
+    @apply py-16 px-4 sm:py-24 sm:px-6 md:py-32 lg:py-40;
+  }
+
+  .container-custom {
+    @apply mx-auto max-w-7xl px-4 sm:px-6;
+    width: 100%;
+    box-sizing: border-box;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  @keyframes float {
+
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+
+    50% {
+      transform: translateY(-20px);
+    }
+  }
+
+  .animate-pulse-slow {
+    animation: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  .mask-gradient {
+    mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
+  }
+}
